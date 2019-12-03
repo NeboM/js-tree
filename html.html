@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>JavaScript</title>
+  </head>
+  <body>
+
+
+
+    <script>
+      // Condition
+      function condition(data,value, leftChild, rightChild){
+        this.data = data;
+        this.leftChild = leftChild;
+        this.rightChild = rightChild;
+        this.value = value;
+        this.hasLeftChild = function(){
+          return this.leftChild !== undefined;
+        }
+        this.hasRightChild = function(){
+          return this.rightChild !== undefined;
+        }
+        this.getRightChild = function(){
+          return this.rightChild;
+        }
+        this.getLeftChild = function(){
+          return this.leftChild;
+        }
+      }
+
+      // Email
+      function email(data, child){
+        this.data = data;
+        this.child = child;
+        this.hasChild = function(){
+          return this.child !== undefined;
+        }
+        this.getChild = function(){
+          return this.child;
+        }
+      }
+
+      // Delay
+      function delay(data, child){
+        this.data = data;
+        this.child = child;
+        this.hasChild = function(){
+          return this.child !== undefined;
+        }
+        this.getChild = function(){
+          return this.child;
+        }
+      }
+
+      let root = new email("Subject1");
+      let condition01 = new condition("condition01", true);
+
+      root.child = condition01;
+
+      let delay01 = new delay("delay01");
+
+      let email01 = new email("Subject2");
+      let email02 = new email("Subject3");
+      let email03 = new email("Subject4");
+      let email04 = new email("Subject5");
+
+
+
+      condition01.leftChild = email01;
+      condition01.rightChild = email02;
+      email01.child = email04;
+      email02.child = delay01;
+      delay01.child = email03;
+
+
+      function printTree(node, space = 0){
+        if(node instanceof email || node instanceof delay){
+          let k = '';
+          for(let i = 0; i < space; i++)
+            k += '----';
+          console.log(k + '' + node.data);
+          space++;
+          if(node.hasChild())
+            printTree(node.getChild(),space);
+
+        }else{
+          let k = '';
+          for(let i = 0; i < space; i++)
+            k += '----';
+          console.log(k + '' + node.data);
+                    space++;
+          if(node.hasLeftChild())
+            printTree(node.getLeftChild(),space);
+
+          if(node.hasRightChild())
+            printTree(node.getRightChild(),space);
+        }
+      }
+
+
+      printTree(root);
+
+    </script>
+  </body>
+</html>
